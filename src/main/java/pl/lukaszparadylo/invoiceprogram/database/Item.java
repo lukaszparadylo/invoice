@@ -1,15 +1,17 @@
 package pl.lukaszparadylo.invoiceprogram.database;
 
-import com.sun.istack.NotNull;
+import lombok.AllArgsConstructor;
 import lombok.NoArgsConstructor;
+import org.springframework.lang.NonNull;
 
 import javax.persistence.*;
 import java.math.BigDecimal;
 
 @Entity
-@Table(name = "ITEM")
+@AllArgsConstructor
 @NoArgsConstructor
-public final class Item {
+@Table(name = "ITEM")
+public class Item {
     private Integer id;
     private Product product;
     private BigDecimal price;
@@ -17,16 +19,17 @@ public final class Item {
     private BigDecimal value;
     private Invoice invoice;
 
-    public Item(Product product, BigDecimal price, Integer quantity) {
+    public Item(Product product, BigDecimal price, Integer quantity, BigDecimal value,Invoice invoice) {
         this.product = product;
         this.price = price;
         this.quantity = quantity;
-        this.value = price.multiply(new BigDecimal(quantity));
+        this.value = value;
+        this.invoice = invoice;
     }
 
     @Id
     @GeneratedValue
-    @NotNull
+    @NonNull
     @Column(name = "ID", unique = true)
     public Integer getId() {
         return id;
@@ -35,8 +38,7 @@ public final class Item {
     public void setId(Integer id) {
         this.id = id;
     }
-
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     @JoinColumn(name = "PRODUCT_ID")
     public Product getProduct() {
         return product;
@@ -45,7 +47,6 @@ public final class Item {
     public void setProduct(Product product) {
         this.product = product;
     }
-
     @Column(name = "PRICE")
     public BigDecimal getPrice() {
         return price;
@@ -54,7 +55,6 @@ public final class Item {
     public void setPrice(BigDecimal price) {
         this.price = price;
     }
-
     @Column(name = "QUANTITY")
     public Integer getQuantity() {
         return quantity;
@@ -63,7 +63,6 @@ public final class Item {
     public void setQuantity(Integer quantity) {
         this.quantity = quantity;
     }
-
     @Column(name = "VALUE")
     public BigDecimal getValue() {
         return value;
@@ -72,8 +71,7 @@ public final class Item {
     public void setValue(BigDecimal value) {
         this.value = value;
     }
-
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "INVOICE_ID")
     public Invoice getInvoice() {
         return invoice;

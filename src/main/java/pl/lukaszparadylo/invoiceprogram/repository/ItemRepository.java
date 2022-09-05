@@ -1,12 +1,11 @@
-package pl.lukaszparadylo.invoiceprogram.dao;
+package pl.lukaszparadylo.invoiceprogram.repository;
 
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import pl.lukaszparadylo.invoiceprogram.database.Invoice;
 import pl.lukaszparadylo.invoiceprogram.database.Item;
 
-@Transactional
 @Repository
-public interface ItemDao extends CrudRepository<Item, Integer> {
+@Transactional
+public interface ItemRepository extends CrudRepository<Item, Integer> {
 }

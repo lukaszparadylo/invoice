@@ -7,73 +7,69 @@ import org.springframework.lang.NonNull;
 import javax.persistence.*;
 
 @Entity
-@Table(name="CLIENT")
+@Table(name = "CLIENT")
 @AllArgsConstructor
 @NoArgsConstructor
-public class Client{
-    int clientId;
-    String clientName;
-    int ClientNIP;
-    String clientBank;
-    Long clientAccountNumber;
+public class Client {
+
+    int Id;
+    String name;
+    int NIP;
+    String bank;
+    Long accountNumber;
     User user;
 
-
-    public Client(String clientName, int clientNIP, String clientBank, Long clientAccountNumber) {
-        this.clientName = clientName;
-        ClientNIP = clientNIP;
-        this.clientBank = clientBank;
-        this.clientAccountNumber = clientAccountNumber;
+    public Client(String name, int NIP, String bank, Long accountNumber, User user) {
+        this.name = name;
+        this.NIP = NIP;
+        this.bank = bank;
+        this.accountNumber = accountNumber;
+        this.user = user;
     }
     @Id
-    @NonNull
     @GeneratedValue
-    @Column(name="ID", unique = true)
-    public int getClientId() {
-        return clientId;
+    @NonNull
+    @Column(name = "ID", unique = true)
+    public int getId() {
+        return Id;
     }
 
-    public void setClientId(int clientId) {
-        this.clientId = clientId;
+    public void setId(int id) {
+        Id = id;
     }
-
     @Column(name = "NAME")
-    public String getClientName() {
-        return clientName;
+    public String getName() {
+        return name;
     }
 
-    public void setClientName(String clientName) {
-        this.clientName = clientName;
+    public void setName(String name) {
+        this.name = name;
     }
-
     @Column(name = "NIP")
-    public int getClientNIP() {
-        return ClientNIP;
+    public int getNIP() {
+        return NIP;
     }
 
-    public void setClientNIP(int clientNIP) {
-        ClientNIP = clientNIP;
+    public void setNIP(int NIP) {
+        this.NIP = NIP;
     }
-
     @Column(name = "BANK")
-    public String getClientBank() {
-        return clientBank;
+    public String getBank() {
+        return bank;
     }
 
-    public void setClientBank(String clientBank) {
-        this.clientBank = clientBank;
+    public void setBank(String bank) {
+        this.bank = bank;
     }
-
     @Column(name = "ACCOUNT_NUMBER")
-    public Long getClientAccountNumber() {
-        return clientAccountNumber;
+    public Long getAccountNumber() {
+        return accountNumber;
     }
 
-    public void setClientAccountNumber(Long clientAccountNumber) {
-        this.clientAccountNumber = clientAccountNumber;
+    public void setAccountNumber(Long accountNumber) {
+        this.accountNumber = accountNumber;
     }
-
-    @ManyToOne(cascade = CascadeType.MERGE)
+    @ManyToOne(cascade = CascadeType.ALL)
     @JoinColumn(name = "USER_ID")
     public User getUser() {
         return user;
@@ -82,6 +78,4 @@ public class Client{
     public void setUser(User user) {
         this.user = user;
     }
-
-
 }
